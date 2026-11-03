@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - RentEase</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RentEase.styles.css" asp-append-version="true" />
+</head>
+
+<body>
+
+    @if (User.Identity != null && User.Identity.IsAuthenticated)
+    {
+        <div class="dashboard-wrapper">
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+
+                <div class="brand">
+                    <div class="brand-icon">R</div>
+                    <div>
+                        <h4>RentEase</h4>
+                        <small>Property Management</small>
+                    </div>
+                </div>
+
+                <div class="sidebar-menu">
+
+                    @if (User.IsInRole("Landlord"))
+                    {
+                        <p class="menu-heading">LANDLORD MENU</p>
+
+                        <a asp-controller="Property" asp-action="Dashboard" class="menu-link">
+                            <span>▦</span> Dashboard
+                        </a>
+
+                        <a asp-controller="Property" asp-action="Index" class="menu-link">
+                            <span>⌂</span> My Properties
+                        </a>
+
+                        <a asp-controller="Rental" asp-action="TenantList" class="menu-link">
+                            <span>♙</span> Tenants
+                        </a>
+
+                        <a asp-controller="Account" asp-action="CreateTenant" class="menu-link">
+                            <span>＋</span> Add Tenant
+                        </a>
+
+                        <a asp-controller="Rental" asp-action="AssignRoom" class="menu-link">
+                            <span>▣</span> Assign Room
+                        </a>
+
+                        <a asp-controller="Rental" asp-action="RecordPayment" class="menu-link">
+                            <span>₹</span> Rent Payments
+                        </a>
+
+                        <a asp-controller="Rental" asp-action="AddUtilityBill" class="menu-link">
+                            <span>▤</span> Utility Bills
+                        </a>
+                    }
+
+                    @if (User.IsInRole("Tenant"))
+                    {
+                        <p class="menu-heading">TENANT MENU</p>
+
+                        <a asp-controller="Rental" asp-action="TenantDashboard" class="menu-link">
+                            <span>▦</span> Dashboard
+                        </a>
+
+                        <a asp-controller="Rental" asp-action="PaymentHistory" class="menu-link">
+                            <span>₹</span> Payment History
+                        </a>
+
+                        <a asp-controller="Rental" asp-action="MyUtilityBills" class="menu-link">
+                            <span>▤</span> Utility Bills
+                        </a>
+
+                        <a asp-controller="Account" asp-action="ChangePassword" class="menu-link">
+                            <span>⚿</span> Change Password
+                        </a>
+                    }
+
+                </div>
+
+                <div class="sidebar-bottom">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            @User.Identity.Name?.Substring(0, 1).ToUpper()
+                        </div>
+                        <div class="user-details">
+                            <strong>@User.Identity.Name</strong>
+                            <small>
+                                @(User.IsInRole("Landlord") ? "Landlord" : "Tenant")
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <form asp-controller="Account"
+                          asp-action="Logout"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <button type="submit" class="logout-link logout-button">
+                            ⇥ Logout
+                        </button>
+
+                    </form>
+                </div>
+
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+
+                <header class="topbar">
+                    <div>
+                        <h5>@ViewData["Title"]</h5>
+                        <small>Welcome to your RentEase workspace</small>
+                    </div>
+                    <div class="topbar-role">
+                        @(User.IsInRole("Landlord") ? "Landlord Account" : "Tenant Account")
+                    </div>
+                </header>
+
+                <div class="page-content">
+                    @RenderBody()
+                </div>
+
+                <footer class="dashboard-footer">
+                    © 2026 RentEase | Property Management System
+                </footer>
+
+            </main>
+
+        </div>
+    }
+    else
+    {
+        <main role="main">
+            @RenderBody()
+        </main>
+    }
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

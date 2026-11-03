@@ -1,0 +1,198 @@
+﻿@model RentEase.DTOs.TenantDashboardDTO
+
+@{
+    ViewData["Title"] = "Tenant Dashboard";
+}
+
+<div class="tenant-dashboard">
+
+    <!-- Welcome Banner -->
+    <section class="tenant-welcome">
+        <div class="welcome-content">
+            <span class="welcome-label">TENANT PORTAL</span>
+            <h2 id="tenantGreeting">Welcome back, @Model.TenantName!</h2>
+            <p>Manage your rental information and keep track of your payments.</p>
+            <div class="welcome-date" id="currentDate"></div>
+        </div>
+
+        <div class="welcome-decoration">
+            <div class="welcome-icon">⌂</div>
+        </div>
+    </section>
+
+    <!-- Summary Cards -->
+    <section class="tenant-stats">
+
+        <div class="tenant-stat-card">
+            <div class="stat-top">
+                <div class="stat-icon rent-icon">₹</div>
+                <span class="stat-label">MONTHLY RENT</span>
+            </div>
+            <h3>₹@Model.MonthlyRent.ToString("N2")</h3>
+            <p>Your monthly rental amount</p>
+        </div>
+
+        <div class="tenant-stat-card">
+            <div class="stat-top">
+                <div class="stat-icon paid-icon">✓</div>
+                <span class="stat-label">TOTAL RENT PAID</span>
+            </div>
+            <h3>₹@Model.TotalRentPaid.ToString("N2")</h3>
+            <p>Total successful payments</p>
+        </div>
+
+        <div class="tenant-stat-card">
+            <div class="stat-top">
+                <div class="stat-icon bill-icon">▤</div>
+                <span class="stat-label">PENDING BILLS</span>
+            </div>
+            <h3>@Model.PendingUtilityBills</h3>
+            <p>Utility bills awaiting payment</p>
+        </div>
+
+        <div class="tenant-stat-card">
+            <div class="stat-top">
+                <div class="stat-icon room-icon">⌂</div>
+                <span class="stat-label">CURRENT ROOM</span>
+            </div>
+            <h3>@(string.IsNullOrWhiteSpace(Model.RoomNumber) ? "Not Assigned" : Model.RoomNumber)</h3>
+            <p>Your allocated room</p>
+        </div>
+
+        <div class="tenant-stat-card">
+            <div class="stat-top">
+                <div class="stat-icon agreement-icon">▣</div>
+                <span class="stat-label">AGREEMENT STATUS</span>
+            </div>
+            <h3 id="agreementCountdown">
+                @(Model.AgreementEndDate.HasValue ? "Loading..." : "N/A")
+            </h3>
+            <p id="agreementMessage">Agreement expiry information</p>
+            <span id="agreementDate"
+                  data-end-date="@(Model.AgreementEndDate.HasValue ? Model.AgreementEndDate.Value.ToString("yyyy-MM-dd") : "")">
+                @(Model.AgreementEndDate.HasValue
+                    ? Model.AgreementEndDate.Value.ToString("dd MMM yyyy")
+                    : "No agreement date")
+            </span>
+        </div>
+
+    </section>
+
+    <!-- Property Details -->
+    <section class="tenant-section">
+
+        <div class="section-heading">
+            <div>
+                <span class="section-eyebrow">YOUR ACCOMMODATION</span>
+                <h4>Rental Details</h4>
+            </div>
+            <span class="active-status">● Tenant Account</span>
+        </div>
+
+        <div class="rental-details-card">
+
+            <div class="property-heading">
+                <div class="property-symbol">⌂</div>
+                <div>
+                    <h5>@(string.IsNullOrWhiteSpace(Model.PropertyName) ? "No Property Assigned" : Model.PropertyName)</h5>
+                    <p>Property information</p>
+                </div>
+            </div>
+
+            <div class="property-info-grid">
+
+                <div class="property-info-item">
+                    <span>FULL NAME</span>
+                    <strong>@Model.TenantName</strong>
+                </div>
+
+                <div class="property-info-item">
+                    <span>EMAIL ADDRESS</span>
+                    <strong>@Model.Email</strong>
+                </div>
+
+                <div class="property-info-item">
+                    <span>MOBILE NUMBER</span>
+                    <strong>@Model.MobileNumber</strong>
+                </div>
+
+                <div class="property-info-item">
+                    <span>ROOM NUMBER</span>
+                    <strong>@(string.IsNullOrWhiteSpace(Model.RoomNumber) ? "Not Assigned" : Model.RoomNumber)</strong>
+                </div>
+
+                <div class="property-info-item full-width">
+                    <span>PROPERTY ADDRESS</span>
+                    <strong>@(string.IsNullOrWhiteSpace(Model.PropertyAddress) ? "Not Available" : Model.PropertyAddress)</strong>
+                </div>
+
+                <div class="property-info-item">
+                    <span>MOVE-IN DATE</span>
+                    <strong>
+                        @(Model.MoveInDate.HasValue
+                            ? Model.MoveInDate.Value.ToString("dd MMM yyyy")
+                            : "Not Available")
+                    </strong>
+                </div>
+
+                <div class="property-info-item">
+                    <span>AGREEMENT END DATE</span>
+                    <strong>
+                        @(Model.AgreementEndDate.HasValue
+                            ? Model.AgreementEndDate.Value.ToString("dd MMM yyyy")
+                            : "Not Available")
+                    </strong>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="tenant-section">
+        <div class="section-heading">
+            <div>
+                <span class="section-eyebrow">QUICK ACCESS</span>
+                <h4>Manage Your Account</h4>
+            </div>
+        </div>
+
+        <div class="tenant-actions">
+
+            <a asp-controller="Rental"
+               asp-action="PaymentHistory"
+               class="tenant-action-card">
+                <div class="action-icon">₹</div>
+                <div>
+                    <h6>Payment History</h6>
+                    <p>View your previous rent payments</p>
+                </div>
+                <span class="action-arrow">→</span>
+            </a>
+
+            <a asp-controller="Rental"
+               asp-action="MyUtilityBills"
+               class="tenant-action-card">
+                <div class="action-icon">▤</div>
+                <div>
+                    <h6>Utility Bills</h6>
+                    <p>Check your electricity and other bills</p>
+                </div>
+                <span class="action-arrow">→</span>
+            </a>
+
+            <a asp-controller="Account"
+               asp-action="ChangePassword"
+               class="tenant-action-card">
+                <div class="action-icon">⚿</div>
+                <div>
+                    <h6>Change Password</h6>
+                    <p>Keep your account secure</p>
+                </div>
+                <span class="action-arrow">→</span>
+            </a>
+
+        </div>
+    </section>
+
+</div>

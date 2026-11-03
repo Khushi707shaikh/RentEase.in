@@ -1,0 +1,71 @@
+﻿@model List<RentEase.DTOs.TenantListDTO>
+
+@{
+    ViewData["Title"] = "Tenant Management";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Tenant Management</h2>
+
+        <a asp-action="CreateTenant"
+           asp-controller="Account"
+           class="btn btn-success">
+            + Add Tenant
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            @if (Model == null || !Model.Any())
+            {
+                <div class="alert alert-info">
+                    No tenants found. Create your first tenant account.
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-hover align-middle">
+
+                        <thead class="table-success">
+                            <tr>
+                                <th>ID</th>
+                                <th>Tenant Name</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+                                <th>Property</th>
+                                <th>Room</th>
+                                <th>Monthly Rent</th>
+                                <th>Agreement</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var tenant in Model)
+                            {
+                                <tr>
+                                    <td>@tenant.TenantId</td>
+                                    <td>@tenant.TenantName</td>
+                                    <td>@tenant.Email</td>
+                                    <td>@tenant.MobileNumber</td>
+                                    <td>@tenant.PropertyName</td>
+                                    <td>@tenant.RoomNumber</td>
+                                    <td>₹@tenant.MonthlyRent.ToString("N2")</td>
+                                    <td>@tenant.AgreementStatus</td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+
+        </div>
+    </div>
+
+</div>

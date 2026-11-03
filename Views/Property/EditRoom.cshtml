@@ -1,0 +1,74 @@
+﻿@model RentEase.DTOs.RoomDTO
+
+@{
+    ViewData["Title"] = "Edit Room";
+}
+
+<div class="container mt-4">
+
+    <h2>Edit Room</h2>
+
+    <form asp-action="EditRoom" method="post">
+
+        <input type="hidden" name="id" value="@ViewBag.RoomId" />
+        <input type="hidden" asp-for="PropertyId" />
+
+        <div class="mb-3">
+            <label asp-for="RoomNumber"></label>
+            <input asp-for="RoomNumber" class="form-control" />
+            <span asp-validation-for="RoomNumber"
+                  class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="MonthlyRent"></label>
+            <input asp-for="MonthlyRent" type="number"
+                   step="0.01" class="form-control" />
+            <span asp-validation-for="MonthlyRent"
+                  class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Capacity"></label>
+            <input asp-for="Capacity" type="number"
+                   class="form-control" />
+            <span asp-validation-for="Capacity"
+                  class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="RoomType"></label>
+            <select asp-for="RoomType" class="form-select">
+                <option value="Residential">Residential</option>
+                <option value="Commercial">Commercial</option>
+            </select>
+            <span asp-validation-for="RoomType"
+                  class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Status"></label>
+            <select asp-for="Status" class="form-select">
+                <option value="Available">Available</option>
+                <option value="Occupied">Occupied</option>
+                <option value="Maintenance">Maintenance</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            Update Room
+        </button>
+
+        <a asp-action="Rooms"
+           asp-route-propertyId="@Model.PropertyId"
+           class="btn btn-secondary">
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

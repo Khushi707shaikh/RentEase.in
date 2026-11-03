@@ -1,0 +1,146 @@
+﻿@model List<RentEase.Models.UtilityBill>
+
+@{
+    ViewData["Title"] = "My Utility Bills";
+    var totalPending = Model
+        .Where(b => b.PaymentStatus == "Pending")
+        .Sum(b => b.Amount);
+    var totalPaid = Model
+        .Where(b => b.PaymentStatus == "Paid")
+        .Sum(b => b.Amount);
+    var pendingCount = Model.Count(b => b.PaymentStatus == "Pending");
+}
+
+<div class="re-page">
+
+    <div class="re-page-heading">
+        <div>
+            <span class="re-eyebrow">TENANT PORTAL</span>
+            <h2>My Utility Bills</h2>
+            <p>View your utility charges and keep track of bill statuses.</p>
+        </div>
+        <div class="re-heading-icon">▤</div>
+    </div>
+
+    <div class="re-summary-grid">
+        <div class="re-summary-card">
+            <span class="re-summary-icon orange">◷</span>
+            <div>
+                <small>PENDING BILLS</small>
+                <h3>@pendingCount</h3>
+            </div>
+        </div>
+
+        <div class="re-summary-card">
+            <span class="re-summary-icon red">₹</span>
+            <div>
+                <small>PENDING AMOUNT</small>
+                <h3>₹@totalPending.ToString("N2")</h3>
+            </div>
+        </div>
+
+        <div class="re-summary-card">
+            <span class="re-summary-icon green">✓</span>
+            <div>
+                <small>AMOUNT PAID</small>
+                <h3>₹@totalPaid.ToString("N2")</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="re-panel">
+        <div class="re-panel-heading">
+            <div>
+                <h4>Utility Bill Records</h4>
+                <p>Electricity, water and other utility charges</p>
+            </div>
+            <span class="re-record-count">@Model.Count Bills</span>
+        </div>
+
+        <div class="re-toolbar">
+            <div class="re-search">
+                <span>⌕</span>
+                <input type="text" id="billSearch"
+                       placeholder="Search bill type or amount..." />
+            </div>
+
+            <select id="billStatusFilter" class="re-filter">
+                <option value="">All Statuses</option>
+                <option value="pending">Pending</option>
+                <option value="paid">Paid</option>
+            </select>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table re-table" id="billTable">
+                <thead>
+                    <tr>
+                        <th>BILL ID</th>
+                        <th>BILL TYPE</th>
+                        <th>BILLING DATE</th>
+                        <th>DUE DATE</th>
+                        <th>AMOUNT</th>
+                        <th>STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        foreach (var bill in Model)
+                        {
+                            var isOverdue = bill.PaymentStatus == "Pending"
+                                && bill.DueDate.Date < DateTime.Today;
+
+                            <tr data-status="@bill.PaymentStatus.ToLowerInvariant()">
+                                <td>#@bill.BillId</td>
+                                <td>
+                                    <strong>@bill.BillType</strong>
+                                </td>
+                                <td>@bill.BillingDate.ToString("dd MMM yyyy")</td>
+                                <td>
+                                    @bill.DueDate.ToString("dd MMM yyyy")
+                                    @if (isOverdue)
+                                    {
+                                        <small class="re-overdue-label">Overdue</small>
+                                    }
+                                </td>
+                                <td class="re-amount">₹@bill.Amount.ToString("N2")</td>
+                                <td>
+                                    @if (isOverdue)
+                                    {
+                                        <span class="re-status status-overdue">Overdue</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="re-status @(bill.PaymentStatus == "Paid" ? "status-paid" : "status-pending")">
+                                            @bill.PaymentStatus
+                                        </span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="re-empty">
+                                <div class="re-empty-icon">▤</div>
+                                <strong>No utility bills available</strong>
+                                <p>Your landlord's utility bills will appear here.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div id="billNoResults" class="re-no-results" hidden>
+            No utility bills match your search.
+        </div>
+    </div>
+
+    <div class="re-note">
+        <strong>Note:</strong> Your landlord records utility bills. Contact your landlord
+        to confirm payment or resolve any incorrect bill details.
+    </div>
+</div>

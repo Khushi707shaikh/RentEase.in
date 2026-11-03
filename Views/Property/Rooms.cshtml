@@ -1,0 +1,95 @@
+﻿@model List<RentEase.Models.Room>
+
+@{
+    ViewData["Title"] = "Room Management";
+}
+
+<div class="container mt-4">
+
+    <h2>Room Management</h2>
+
+    <h5>Property: @ViewBag.PropertyName</h5>
+
+    
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+    <a asp-action="AddRoom"
+       asp-route-propertyId="@ViewBag.PropertyId"
+       class="btn btn-primary mb-3">
+        Add New Room
+    </a>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Room Number</th>
+                <th>Monthly Rent</th>
+                <th>Capacity</th>
+                <th>Room Type</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (Model.Any())
+            {
+                foreach (var room in Model)
+                {
+                    <tr>
+                        <td>@room.RoomNumber</td>
+                        <td>₹@room.MonthlyRent</td>
+                        <td>@room.Capacity</td>
+                        <td>@room.RoomType</td>
+                        <td>@room.Status</td>
+
+                        <td>
+                            <a asp-action="EditRoom"
+                               asp-route-id="@room.RoomId"
+                               class="btn btn-warning btn-sm">
+                                Edit
+                            </a>
+
+                            <form asp-action="DeleteRoom"
+                                  asp-route-id="@room.RoomId"
+                                  method="post"
+                                  style="display:inline">
+
+                                <button type="submit"
+                                        class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Are you sure you want to delete this room?')">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">
+                        No rooms added yet.
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Back to Properties
+    </a>
+
+</div>

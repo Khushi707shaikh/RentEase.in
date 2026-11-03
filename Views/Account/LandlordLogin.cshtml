@@ -1,0 +1,120 @@
+﻿@model RentEase.DTOs.LoginDTO
+
+@{
+    ViewData["Title"] = "Landlord Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Landlord Login - RentEase</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="re-auth-page landlord-auth">
+
+    <div class="auth-container">
+
+        <div class="auth-visual landlord-visual">
+            <a asp-controller="Account" asp-action="Login" class="auth-back">
+                ← Back
+            </a>
+
+            <div class="auth-visual-content">
+                <div class="auth-large-icon">⌂</div>
+                <h1>Manage Your Properties.</h1>
+                <p>
+                    Take control of your properties, tenants,
+                    rental agreements and payments — all in one place.
+                </p>
+            </div>
+
+            <div class="auth-visual-footer">
+                RentEase | Landlord Portal
+            </div>
+        </div>
+
+        <div class="auth-form-section">
+
+            <div class="auth-brand">
+                <div class="choice-logo">R</div>
+                <span>RentEase</span>
+            </div>
+
+            <div class="auth-form-content">
+                <span class="auth-label">LANDLORD PORTAL</span>
+                <h2>Welcome Back!</h2>
+                <p class="auth-description">
+                    Sign in to manage your rental properties.
+                </p>
+
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["Success"]
+                    </div>
+                }
+
+                <form asp-controller="Account"
+                      asp-action="LandlordLogin"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger auth-validation"></div>
+
+                    <div class="auth-input-group">
+                        <label asp-for="Email">Email Address</label>
+                        <input asp-for="Email"
+                               type="email"
+                               placeholder="Enter your email"
+                               autocomplete="username" />
+                        <span asp-validation-for="Email"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="auth-input-group">
+                        <label asp-for="Password">Password</label>
+                        <input asp-for="Password"
+                               type="password"
+                               placeholder="Enter your password"
+                               autocomplete="current-password" />
+                        <span asp-validation-for="Password"
+                              class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="auth-submit landlord-submit">
+                        Login as Landlord →
+                    </button>
+
+                </form>
+
+                <div class="auth-switch">
+                    Not a landlord?
+                    <a asp-controller="Account" asp-action="TenantLogin">
+                        Tenant Login
+                    </a>
+                </div>
+
+                <div class="auth-register">
+                    Don't have an account?
+                    <a asp-controller="Account" asp-action="Register">
+                        Register as Landlord
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,338 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RentEase | Smarter Property Management</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<body class="re-home">
+
+    <!-- NAVBAR -->
+    <nav class="re-navbar">
+        <a asp-controller="Account" asp-action="Login" class="re-logo">
+            <span class="re-logo-icon">R</span>
+            <span>Rent<span>Ease</span></span>
+        </a>
+
+        <button class="re-menu-toggle" id="menuToggle"
+                aria-label="Toggle navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+
+        <div class="re-nav-links" id="navLinks">
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#about">About Us</a>
+
+            <div class="re-nav-actions">
+                <a asp-controller="Account" asp-action="TenantLogin"
+                   class="re-nav-tenant">Tenant Login</a>
+
+                <a asp-controller="Account" asp-action="LandlordLogin"
+                   class="re-nav-login">Landlord Login <span>→</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="re-hero" id="home">
+
+        <div class="re-hero-content">
+            <div class="re-eyebrow">
+                <span class="re-eyebrow-dot"></span>
+                PROPERTY MANAGEMENT, SIMPLIFIED
+            </div>
+
+            <h1>
+                Your Property.<br />
+                Your People.<br />
+                <span>One Simple Place.</span>
+            </h1>
+
+            <p class="re-hero-description">
+                Manage properties, organize tenants and track rental payments
+                with ease. RentEase brings your entire rental experience
+                together in one smart platform.
+            </p>
+
+            <div class="re-hero-buttons">
+                <a asp-controller="Account" asp-action="LandlordLogin"
+                   class="re-primary-btn">
+                    I'm a Landlord <span>→</span>
+                </a>
+
+                <a asp-controller="Account" asp-action="TenantLogin"
+                   class="re-secondary-btn">
+                    I'm a Tenant
+                </a>
+            </div>
+
+            <div class="re-trust-note">
+                <span class="re-trust-check">✓</span>
+                Simple. Organized. Hassle-free.
+            </div>
+        </div>
+
+        <!-- HERO VISUAL -->
+        <div class="re-hero-visual">
+
+            <div class="re-orbit re-orbit-one"></div>
+            <div class="re-orbit re-orbit-two"></div>
+
+            <div class="re-house-art">
+                <div class="re-house-sun"></div>
+
+                <div class="re-house-roof"></div>
+
+                <div class="re-house-body">
+                    <div class="re-house-window window-left">
+                        <span></span>
+                    </div>
+
+                    <div class="re-house-door">
+                        <div></div>
+                    </div>
+
+                    <div class="re-house-window window-right">
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="re-house-base"></div>
+                <div class="re-house-plant plant-left">✦</div>
+                <div class="re-house-plant plant-right">✦</div>
+            </div>
+
+            <div class="re-floating-card re-card-top">
+                <div class="re-floating-icon">⌂</div>
+                <div>
+                    <strong>Property Management</strong>
+                    <small>Everything in one place</small>
+                </div>
+            </div>
+
+            <div class="re-floating-card re-card-bottom">
+                <div class="re-floating-icon payment-icon">₹</div>
+                <div>
+                    <strong>Rent Tracking</strong>
+                    <small>Stay on top of payments</small>
+                </div>
+                <span class="re-floating-check">✓</span>
+            </div>
+
+            <div class="re-hero-caption">
+                <span class="re-caption-dot"></span>
+                A smarter way to rent and manage
+            </div>
+
+        </div>
+    </section>
+
+    <!-- QUICK BENEFITS -->
+    <section class="re-benefits" id="about">
+        <div class="re-benefit">
+            <span class="re-benefit-icon">⌂</span>
+            <div>
+                <strong>Property Organization</strong>
+                <small>Keep every property organized</small>
+            </div>
+        </div>
+
+        <div class="re-benefit">
+            <span class="re-benefit-icon">♙</span>
+            <div>
+                <strong>Tenant Management</strong>
+                <small>Manage tenant information easily</small>
+            </div>
+        </div>
+
+        <div class="re-benefit">
+            <span class="re-benefit-icon">₹</span>
+            <div>
+                <strong>Payment Tracking</strong>
+                <small>Keep payment records together</small>
+            </div>
+        </div>
+
+        <div class="re-benefit">
+            <span class="re-benefit-icon">▤</span>
+            <div>
+                <strong>Utility Management</strong>
+                <small>Track utility bills with ease</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="re-features-section" id="features">
+
+        <div class="re-section-heading">
+            <span class="re-section-label">WHAT RENT EASE OFFERS</span>
+            <h2>Everything you need.<br /><span>Nothing you don't.</span></h2>
+            <p>
+                Designed to make property management easier for landlords
+                and everyday rental life simpler for tenants.
+            </p>
+        </div>
+
+        <div class="re-feature-grid">
+
+            <article class="re-feature-card">
+                <div class="re-feature-icon feature-green">⌂</div>
+                <h3>Manage Properties</h3>
+                <p>
+                    Add properties, organize rooms and keep all your
+                    property details in one convenient place.
+                </p>
+                <span class="re-feature-number">01</span>
+            </article>
+
+            <article class="re-feature-card">
+                <div class="re-feature-icon feature-peach">♙</div>
+                <h3>Manage Tenants</h3>
+                <p>
+                    Create tenant accounts, assign rooms and maintain
+                    important tenant information.
+                </p>
+                <span class="re-feature-number">02</span>
+            </article>
+
+            <article class="re-feature-card">
+                <div class="re-feature-icon feature-yellow">₹</div>
+                <h3>Track Rent Payments</h3>
+                <p>
+                    Record rent payments and let tenants view their
+                    payment history whenever they need it.
+                </p>
+                <span class="re-feature-number">03</span>
+            </article>
+
+            <article class="re-feature-card">
+                <div class="re-feature-icon feature-blue">▤</div>
+                <h3>Utility Bills</h3>
+                <p>
+                    Maintain utility bill records and help tenants
+                    keep track of their pending bills.
+                </p>
+                <span class="re-feature-number">04</span>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- TWO USER PORTALS -->
+    <section class="re-portals-section">
+
+        <div class="re-section-heading">
+            <span class="re-section-label">MADE FOR BOTH SIDES</span>
+            <h2>One platform.<br /><span>Two simple experiences.</span></h2>
+            <p>Choose your portal and get started with RentEase.</p>
+        </div>
+
+        <div class="re-portal-grid">
+
+            <div class="re-portal-card landlord-portal">
+                <div class="re-portal-top">
+                    <span class="re-portal-symbol">⌂</span>
+                    <span class="re-portal-tag">LANDLORD PORTAL</span>
+                </div>
+
+                <h3>Take control of your properties.</h3>
+                <p>
+                    Manage your rental properties, rooms, tenants,
+                    agreements and payment records from one dashboard.
+                </p>
+
+                <ul>
+                    <li>✓ Manage your properties and rooms</li>
+                    <li>✓ Create and manage tenant accounts</li>
+                    <li>✓ Record rent and utility bills</li>
+                </ul>
+
+                <a asp-controller="Account" asp-action="LandlordLogin"
+                   class="re-portal-btn">
+                    Login as Landlord <span>→</span>
+                </a>
+            </div>
+
+            <div class="re-portal-card tenant-portal">
+                <div class="re-portal-top">
+                    <span class="re-portal-symbol">♙</span>
+                    <span class="re-portal-tag">TENANT PORTAL</span>
+                </div>
+
+                <h3>Your rental details, all in one place.</h3>
+                <p>
+                    Access your rental information, payment history
+                    and utility bill details with your tenant account.
+                </p>
+
+                <ul>
+                    <li>✓ View your room and rental details</li>
+                    <li>✓ Check rent payment history</li>
+                    <li>✓ View utility bills</li>
+                </ul>
+
+                <a asp-controller="Account" asp-action="TenantLogin"
+                   class="re-portal-btn">
+                    Login as Tenant <span>→</span>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="re-cta">
+        <div class="re-cta-decoration"></div>
+
+        <span class="re-section-label">YOUR RENTAL JOURNEY STARTS HERE</span>
+        <h2>Make property management<br />feel effortless.</h2>
+        <p>
+            Join RentEase and bring simplicity to your rental experience.
+        </p>
+
+        <a asp-controller="Account" asp-action="Register"
+           class="re-cta-button">
+            Get Started Today <span>→</span>
+        </a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="re-footer">
+        <div class="re-footer-main">
+            <a asp-controller="Account" asp-action="Login" class="re-logo">
+                <span class="re-logo-icon">R</span>
+                <span>Rent<span>Ease</span></span>
+            </a>
+
+            <p>
+                A simpler way to manage properties and rental experiences.
+            </p>
+
+            <div class="re-footer-links">
+                <a href="#home">Home</a>
+                <a href="#features">Features</a>
+                <a asp-controller="Account" asp-action="LandlordLogin">Landlord</a>
+                <a asp-controller="Account" asp-action="TenantLogin">Tenant</a>
+            </div>
+        </div>
+
+        <div class="re-footer-bottom">
+            <span>© 2026 RentEase. All rights reserved.</span>
+            <span>Property Management Made Simple.</span>
+        </div>
+    </footer>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

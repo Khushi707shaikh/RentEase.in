@@ -1,0 +1,123 @@
+﻿@model List<RentEase.Models.RentPayment>
+
+@{
+    ViewData["Title"] = "Payment History";
+    var totalPaid = Model
+        .Where(p => p.PaymentStatus == "Paid")
+        .Sum(p => p.Amount);
+    var paidCount = Model.Count(p => p.PaymentStatus == "Paid");
+    var pendingCount = Model.Count(p => p.PaymentStatus != "Paid");
+}
+
+<div class="re-page">
+
+    <div class="re-page-heading">
+        <div>
+            <span class="re-eyebrow">TENANT PORTAL</span>
+            <h2>Payment History</h2>
+            <p>Track your rent payments and transaction records.</p>
+        </div>
+        <div class="re-heading-icon">₹</div>
+    </div>
+
+    <div class="re-summary-grid">
+        <div class="re-summary-card">
+            <span class="re-summary-icon green">₹</span>
+            <div>
+                <small>TOTAL RENT PAID</small>
+                <h3>₹@totalPaid.ToString("N2")</h3>
+            </div>
+        </div>
+
+        <div class="re-summary-card">
+            <span class="re-summary-icon blue">✓</span>
+            <div>
+                <small>SUCCESSFUL PAYMENTS</small>
+                <h3>@paidCount</h3>
+            </div>
+        </div>
+
+        <div class="re-summary-card">
+            <span class="re-summary-icon orange">◷</span>
+            <div>
+                <small>OTHER PAYMENT RECORDS</small>
+                <h3>@pendingCount</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="re-panel">
+        <div class="re-panel-heading">
+            <div>
+                <h4>Transaction Records</h4>
+                <p>Your rent payment details</p>
+            </div>
+            <span class="re-record-count">@Model.Count Records</span>
+        </div>
+
+        <div class="re-toolbar">
+            <div class="re-search">
+                <span>⌕</span>
+                <input type="text" id="paymentSearch"
+                       placeholder="Search payment method, reference or amount..." />
+            </div>
+
+            <select id="paymentStatusFilter" class="re-filter">
+                <option value="">All Statuses</option>
+                <option value="paid">Paid</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table re-table" id="paymentTable">
+                <thead>
+                    <tr>
+                        <th>PAYMENT ID</th>
+                        <th>DATE</th>
+                        <th>AMOUNT</th>
+                        <th>METHOD</th>
+                        <th>REFERENCE</th>
+                        <th>STATUS</th>
+                        <th>REMARKS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        foreach (var payment in Model)
+                        {
+                            <tr data-status="@(payment.PaymentStatus == "Paid" ? "paid" : "other")">
+                                <td>#@payment.PaymentId</td>
+                                <td>@payment.PaymentDate.ToString("dd MMM yyyy")</td>
+                                <td class="re-amount">₹@payment.Amount.ToString("N2")</td>
+                                <td>@payment.PaymentMethod</td>
+                                <td>@(string.IsNullOrWhiteSpace(payment.TransactionReference) ? "—" : payment.TransactionReference)</td>
+                                <td>
+                                    <span class="re-status @(payment.PaymentStatus == "Paid" ? "status-paid" : "status-other")">
+                                        @payment.PaymentStatus
+                                    </span>
+                                </td>
+                                <td>@(string.IsNullOrWhiteSpace(payment.Remarks) ? "—" : payment.Remarks)</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="re-empty">
+                                <div class="re-empty-icon">₹</div>
+                                <strong>No payment records yet</strong>
+                                <p>Your rent payments will appear here.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div id="paymentNoResults" class="re-no-results" hidden>
+            No payments match your search.
+        </div>
+    </div>
+</div>

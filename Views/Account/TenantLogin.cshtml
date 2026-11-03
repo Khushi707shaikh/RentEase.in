@@ -1,0 +1,118 @@
+﻿@model RentEase.DTOs.LoginDTO
+
+@{
+    ViewData["Title"] = "Tenant Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tenant Login - RentEase</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="re-auth-page tenant-auth">
+
+    <div class="auth-container">
+
+        <div class="auth-visual tenant-visual">
+            <a asp-controller="Account" asp-action="Login" class="auth-back">
+                ← Back
+            </a>
+
+            <div class="auth-visual-content">
+                <div class="auth-large-icon">⌂</div>
+                <h1>Your Home, Your Space.</h1>
+                <p>
+                    Access your rental information, check your payments
+                    and stay updated with your utility bills.
+                </p>
+            </div>
+
+            <div class="auth-visual-footer">
+                RentEase | Tenant Portal
+            </div>
+        </div>
+
+        <div class="auth-form-section">
+
+            <div class="auth-brand">
+                <div class="choice-logo">R</div>
+                <span>RentEase</span>
+            </div>
+
+            <div class="auth-form-content">
+                <span class="auth-label">TENANT PORTAL</span>
+                <h2>Welcome Home!</h2>
+                <p class="auth-description">
+                    Sign in to access your rental account.
+                </p>
+
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["Success"]
+                    </div>
+                }
+
+                <form asp-controller="Account"
+                      asp-action="TenantLogin"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger auth-validation"></div>
+
+                    <div class="auth-input-group">
+                        <label asp-for="Email">Email Address</label>
+                        <input asp-for="Email"
+                               type="email"
+                               placeholder="Enter your email"
+                               autocomplete="username" />
+                        <span asp-validation-for="Email"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="auth-input-group">
+                        <label asp-for="Password">Password</label>
+                        <input asp-for="Password"
+                               type="password"
+                               placeholder="Enter your password"
+                               autocomplete="current-password" />
+                        <span asp-validation-for="Password"
+                              class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="auth-submit tenant-submit">
+                        Login as Tenant →
+                    </button>
+
+                </form>
+
+                <div class="auth-switch">
+                    Are you a landlord?
+                    <a asp-controller="Account" asp-action="LandlordLogin">
+                        Landlord Login
+                    </a>
+                </div>
+
+                <div class="auth-register">
+                    Need an account?
+                    Contact your landlord to get login credentials.
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+</body>
+</html>

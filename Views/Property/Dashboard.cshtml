@@ -1,0 +1,421 @@
+﻿@model RentEase.DTOs.DashboardDTO
+
+@{
+    ViewData["Title"] = "Dashboard";
+
+    var occupancy = Model.TotalRooms > 0
+        ? (int)Math.Round((double)Model.OccupiedRooms / Model.TotalRooms * 100)
+        : 0;
+
+    var availability = Model.TotalRooms > 0
+        ? (int)Math.Round((double)Model.AvailableRooms / Model.TotalRooms * 100)
+        : 0;
+}
+
+<div class="re-dashboard">
+
+    <!-- WELCOME BANNER -->
+    <section class="re-dashboard-hero">
+        <div class="re-hero-copy">
+            <span class="re-dashboard-eyebrow">
+                <span class="re-live-dot"></span>
+                LANDLORD WORKSPACE
+            </span>
+
+            <h2>Welcome back!</h2>
+
+            <p>
+                Here's what's happening with your rental properties.
+                Manage your portfolio and keep everything running smoothly.
+            </p>
+
+            <div class="re-dashboard-date">
+                <span>▦</span>
+                <span id="dashboardDate">Loading date...</span>
+            </div>
+        </div>
+
+        <div class="re-hero-decoration" aria-hidden="true">
+            <div class="re-hero-circle re-circle-one"></div>
+            <div class="re-hero-circle re-circle-two"></div>
+            <div class="re-hero-house">⌂</div>
+            <div class="re-hero-sparkle">✦</div>
+        </div>
+    </section>
+
+    <!-- QUICK ACTIONS -->
+    <section class="re-dashboard-actions">
+        <div>
+            <span class="re-section-kicker">QUICK ACCESS</span>
+            <h3>What would you like to do?</h3>
+        </div>
+
+        <div class="re-action-list">
+
+            <a asp-controller="Property" asp-action="Create"
+               class="re-action-btn">
+                <span class="re-action-icon">＋</span>
+                <span>Add Property</span>
+            </a>
+
+            <a asp-controller="Account" asp-action="CreateTenant"
+               class="re-action-btn">
+                <span class="re-action-icon">♙</span>
+                <span>Add Tenant</span>
+            </a>
+
+            <a asp-controller="Rental" asp-action="AssignRoom"
+               class="re-action-btn">
+                <span class="re-action-icon">▣</span>
+                <span>Assign Room</span>
+            </a>
+
+            <a asp-controller="Rental" asp-action="RecordPayment"
+               class="re-action-btn">
+                <span class="re-action-icon">₹</span>
+                <span>Record Payment</span>
+            </a>
+
+            <a asp-controller="Rental" asp-action="AddUtilityBill"
+               class="re-action-btn">
+                <span class="re-action-icon">▤</span>
+                <span>Add Utility Bill</span>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- STATISTICS -->
+    <section class="re-stats-section">
+
+        <div class="re-dashboard-section-heading">
+            <div>
+                <span class="re-section-kicker">YOUR PORTFOLIO</span>
+                <h3>Property Overview</h3>
+            </div>
+
+            <a asp-controller="Property" asp-action="Index"
+               class="re-view-all">
+                View properties <span>→</span>
+            </a>
+        </div>
+
+        <div class="row g-3">
+
+            <div class="col-12 col-sm-6 col-xl-4">
+                <div class="re-stat-card stat-properties">
+                    <div class="re-stat-top">
+                        <div class="re-stat-icon">⌂</div>
+                        <span class="re-stat-label">PROPERTY PORTFOLIO</span>
+                    </div>
+
+                    <div class="re-stat-value"
+                         data-count="@Model.TotalProperties">
+                        0
+                    </div>
+
+                    <div class="re-stat-bottom">
+                        <span>Total Properties</span>
+                        <span class="re-stat-arrow">↗</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-4">
+                <div class="re-stat-card stat-rooms">
+                    <div class="re-stat-top">
+                        <div class="re-stat-icon">▦</div>
+                        <span class="re-stat-label">ROOM INVENTORY</span>
+                    </div>
+
+                    <div class="re-stat-value"
+                         data-count="@Model.TotalRooms">
+                        0
+                    </div>
+
+                    <div class="re-stat-bottom">
+                        <span>Total Rooms</span>
+                        <span class="re-stat-arrow">↗</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-4">
+                <div class="re-stat-card stat-occupied">
+                    <div class="re-stat-top">
+                        <div class="re-stat-icon">✓</div>
+                        <span class="re-stat-label">ROOM STATUS</span>
+                    </div>
+
+                    <div class="re-stat-value"
+                         data-count="@Model.OccupiedRooms">
+                        0
+                    </div>
+
+                    <div class="re-stat-bottom">
+                        <span>Occupied Rooms</span>
+                        <span class="re-stat-arrow">↗</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-4">
+                <div class="re-stat-card stat-available">
+                    <div class="re-stat-top">
+                        <div class="re-stat-icon">⌂</div>
+                        <span class="re-stat-label">ROOM STATUS</span>
+                    </div>
+
+                    <div class="re-stat-value"
+                         data-count="@Model.AvailableRooms">
+                        0
+                    </div>
+
+                    <div class="re-stat-bottom">
+                        <span>Available Rooms</span>
+                        <span class="re-stat-arrow">↗</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-4">
+                <div class="re-stat-card stat-tenants">
+                    <div class="re-stat-top">
+                        <div class="re-stat-icon">♙</div>
+                        <span class="re-stat-label">TENANT RECORDS</span>
+                    </div>
+
+                    <div class="re-stat-value"
+                         data-count="@Model.TotalTenants">
+                        0
+                    </div>
+
+                    <div class="re-stat-bottom">
+                        <span>Total Tenants</span>
+                        <span class="re-stat-arrow">↗</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-4">
+                <div class="re-stat-card stat-income">
+                    <div class="re-stat-top">
+                        <div class="re-stat-icon">₹</div>
+                        <span class="re-stat-label">RENT COLLECTION</span>
+                    </div>
+
+                    <div class="re-stat-value re-money"
+                         data-count="@Model.TotalRentCollected">
+                        ₹0
+                    </div>
+
+                    <div class="re-stat-bottom">
+                        <span>Total Rent Collected</span>
+                        <span class="re-stat-arrow">↗</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FINANCIAL AND OCCUPANCY OVERVIEW -->
+    <section class="row g-3 re-insights-section">
+
+        <div class="col-12 col-lg-7">
+            <div class="re-insight-card re-income-card">
+
+                <div class="re-insight-heading">
+                    <div>
+                        <span class="re-section-kicker">FINANCIAL OVERVIEW</span>
+                        <h3>Rental Income</h3>
+                    </div>
+                    <span class="re-insight-icon">₹</span>
+                </div>
+
+                <p class="re-insight-description">
+                    Your total rent collection this month.
+                </p>
+
+                <div class="re-income-amount">
+                    ₹<span class="re-money"
+                           data-count="@Model.CurrentMonthRentCollected">0</span>
+                </div>
+
+                <div class="re-income-caption">
+                    <span class="re-income-dot"></span>
+                    Rent collected this month
+                </div>
+
+                <div class="re-income-footer">
+                    <span>All-time rent collection</span>
+                    <strong>
+                        ₹<span class="re-money"
+                               data-count="@Model.TotalRentCollected">0</span>
+                    </strong>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-5">
+            <div class="re-insight-card re-occupancy-card">
+
+                <div class="re-insight-heading">
+                    <div>
+                        <span class="re-section-kicker">ROOM ANALYTICS</span>
+                        <h3>Room Occupancy</h3>
+                    </div>
+                    <span class="re-insight-icon">▦</span>
+                </div>
+
+                <div class="re-occupancy-content">
+
+                    <div class="re-occupancy-ring"
+                         id="occupancyRing"
+                         style="--occupancy: 0deg">
+
+                        <div class="re-ring-inner">
+                            <strong id="occupancyValue">0%</strong>
+                            <small>Occupied</small>
+                        </div>
+
+                    </div>
+
+                    <div class="re-occupancy-details">
+
+                        <div class="re-legend-item">
+                            <span class="re-legend-dot occupied-dot"></span>
+                            <div>
+                                <small>Occupied</small>
+                                <strong>@Model.OccupiedRooms rooms</strong>
+                            </div>
+                        </div>
+
+                        <div class="re-legend-item">
+                            <span class="re-legend-dot available-dot"></span>
+                            <div>
+                                <small>Available</small>
+                                <strong>@Model.AvailableRooms rooms</strong>
+                            </div>
+                        </div>
+
+                        <div class="re-legend-item">
+                            <span class="re-legend-dot total-dot"></span>
+                            <div>
+                                <small>Total</small>
+                                <strong>@Model.TotalRooms rooms</strong>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="re-occupancy-progress">
+                    <div class="re-progress-heading">
+                        <span>Room occupancy</span>
+                        <strong>@occupancy%</strong>
+                    </div>
+
+                    <div class="progress">
+                        <div class="progress-bar"
+                             id="occupancyProgress"
+                             role="progressbar"
+                             style="width: 0%"
+                             aria-valuenow="@occupancy"
+                             aria-valuemin="0"
+                             aria-valuemax="100">
+                        </div>
+                    </div>
+
+                    <small>@availability% rooms are currently available</small>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <!-- MANAGEMENT SHORTCUTS -->
+    <section class="re-management-section">
+
+        <div class="re-dashboard-section-heading">
+            <div>
+                <span class="re-section-kicker">MANAGE YOUR BUSINESS</span>
+                <h3>Management Center</h3>
+            </div>
+        </div>
+
+        <div class="re-management-grid">
+
+            <a asp-controller="Property" asp-action="Index"
+               class="re-management-item">
+                <span class="re-management-icon">⌂</span>
+                <span>
+                    <strong>My Properties</strong>
+                    <small>View and manage properties</small>
+                </span>
+                <span class="re-management-arrow">→</span>
+            </a>
+
+            <a asp-controller="Rental" asp-action="TenantList"
+               class="re-management-item">
+                <span class="re-management-icon">♙</span>
+                <span>
+                    <strong>Tenant Directory</strong>
+                    <small>View all your tenants</small>
+                </span>
+                <span class="re-management-arrow">→</span>
+            </a>
+
+            <a asp-controller="Rental" asp-action="AssignRoom"
+               class="re-management-item">
+                <span class="re-management-icon">▣</span>
+                <span>
+                    <strong>Room Allocation</strong>
+                    <small>Assign rooms to tenants</small>
+                </span>
+                <span class="re-management-arrow">→</span>
+            </a>
+
+            <a asp-controller="Rental" asp-action="RecordPayment"
+               class="re-management-item">
+                <span class="re-management-icon">₹</span>
+                <span>
+                    <strong>Rent Payments</strong>
+                    <small>Record rental payments</small>
+                </span>
+                <span class="re-management-arrow">→</span>
+            </a>
+
+            <a asp-controller="Rental" asp-action="AddUtilityBill"
+               class="re-management-item">
+                <span class="re-management-icon">▤</span>
+                <span>
+                    <strong>Utility Bills</strong>
+                    <small>Add and manage bills</small>
+                </span>
+                <span class="re-management-arrow">→</span>
+            </a>
+
+            <a asp-controller="Property" asp-action="Create"
+               class="re-management-item">
+                <span class="re-management-icon">＋</span>
+                <span>
+                    <strong>Add New Property</strong>
+                    <small>Expand your portfolio</small>
+                </span>
+                <span class="re-management-arrow">→</span>
+            </a>
+
+        </div>
+
+    </section>
+
+    <div class="re-dashboard-bottom-note">
+        <span>✦</span>
+        Keep your rental business organized with RentEase.
+    </div>
+
+</div>

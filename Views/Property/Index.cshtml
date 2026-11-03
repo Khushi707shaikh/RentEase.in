@@ -1,0 +1,107 @@
+﻿@model List<RentEase.Models.Property>
+
+@{
+    ViewData["Title"] = "My Properties";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>My Properties</h2>
+
+        <a asp-action="Create" class="btn btn-success">
+            + Add Property
+        </a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">
+            No properties added yet. Click Add Property to get started.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Property Name</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Total Rooms</th>
+                        <th>Total Units</th>
+                        <th>Added Units</th>
+                        <th>Remaining Units</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var property in Model)
+                    {
+                        <tr>
+                            <td>@property.PropertyId</td>
+                            <td>@property.PropertyName</td>
+                            <td>@property.Address</td>
+                            <td>@property.City</td>
+                            <td>@property.State</td>
+                            <td>@property.TotalRooms</td>
+                            <td>@property.TotalRooms</td>
+
+                            <td>
+                                @ViewBag.AddedUnits[property.PropertyId]
+                            </td>
+
+                            <td>
+                                @(property.TotalRooms - (int)ViewBag.AddedUnits[property.PropertyId])
+                            </td>
+                            <td>
+                                <a asp-action="Rooms"
+                                   asp-route-propertyId="@property.PropertyId"
+                                   class="btn btn-info btn-sm">
+                                    Manage Rooms
+                                </a>
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@property.PropertyId"
+                                   class="btn btn-warning btn-sm">
+                                    Edit
+                                </a>
+
+                                <form asp-action="Delete"
+                                      asp-route-id="@property.PropertyId"
+                                      method="post"
+                                      style="display:inline">
+
+                                    <button type="submit"
+                                            class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Are you sure?')">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+</div>

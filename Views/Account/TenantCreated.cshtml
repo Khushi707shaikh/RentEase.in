@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Tenant Created";
+}
+
+<div class="container mt-4">
+
+    <div class="alert alert-success">
+        <h3>Tenant Account Created Successfully!</h3>
+    </div>
+
+    <div class="card p-4">
+
+        <h5>Tenant Details</h5>
+
+        <p>
+            <strong>Name:</strong> @TempData["TenantName"]
+        </p>
+
+        <p>
+            <strong>Email:</strong> @TempData["TenantEmail"]
+        </p>
+
+        <hr />
+
+        <h5>Temporary Password</h5>
+
+        <div class="alert alert-warning">
+            <strong>@TempData["TemporaryPassword"]</strong>
+        </div>
+
+        <p class="text-danger">
+            Save this password securely and share it privately with the tenant.
+            It will not be displayed again after leaving this page.
+        </p>
+
+        <a asp-action="CreateTenant" class="btn btn-primary">
+            Create Another Tenant
+        </a>
+
+    </div>
+
+</div>
